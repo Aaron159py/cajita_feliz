@@ -1,5 +1,13 @@
 
 
-float tareScale(int tareButton{
-  
+
+void showWeight(){
+
+}
+
+
+
+void tareScale(){
+	scale.tare
+
 }

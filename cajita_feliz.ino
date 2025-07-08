@@ -3,7 +3,12 @@
 #include "happy_functions.h"
 
 
+HX711 scale;
+
 void setup() {
+  Serial.begin(57600);
+  scale.begin(pinDT_hx711, pinSCK_hx711);
+
   pinMode(buttonON, HIGH);
   pinMode(buttonRESET, LOW);
 
