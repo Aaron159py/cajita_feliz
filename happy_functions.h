@@ -26,6 +26,17 @@ void tareScale(){
 		lcd.print(reading,3);
 	}
 	else {
-		Serial.println("404 HX711 not found");
+ 		Serial.println("404 HX711 not found");
 		lcd.print("404 not found");
 }
+
+
+void printMeasure(){
+	Serial.println("Measuring");
+	lcd.setCursor(0, 0);
+	lcd.print("Measuring");
+	lcd.setCursor(0, 1);
+	lcd.print(measure);
+}
+
+

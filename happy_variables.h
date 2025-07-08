@@ -14,3 +14,7 @@ const uint8_t pinGND_i2c = GND; //must be changed
 const uint8_t pinVCC_i2c = 5V;
 const uint8_t pinSDA_i2c = A4;
 const uint8_t pinSCL_i2c = A5;
+
+
+// else variables
+float measure = 0.0;
