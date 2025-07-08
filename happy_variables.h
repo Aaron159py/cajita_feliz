@@ -2,12 +2,15 @@
 
 
 // HX711 variables
-const unsigned int pinGND_hx711 = 13; // must be changed
-const unsigned int pinDT_hx711 = 2;
-const unsigned int pinSCK_hx711 = 3;
-const unsigned int pinVCC_hx711 = 1; // must be changed
+const uint8_t pinGND_hx711 = GND; // must be changed
+const uint8_t pinDT_hx711 = 2;
+const uint8_t pinSCK_hx711 = 3;
+const uint8_t pinVCC_hx711 = 5V; // must be changed
 
 
 // I2C variables
 
-
+const uint8_t pinGND_i2c = GND; //must be changed
+const uint8_t pinVCC_i2c = 5V;
+const uint8_t pinSDA_i2c = A4;
+const uint8_t pinSCL_i2c = A5;
