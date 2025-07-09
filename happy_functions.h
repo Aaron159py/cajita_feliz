@@ -1,7 +1,4 @@
-
-
-
-void showWeight(){
+void showWeight()
 
 }
 
@@ -32,6 +29,7 @@ void tareScale(){
 
 
 void printMeasure(){
+	measure = scale.get_value(100);
 	Serial.println("Measuring");
 	lcd.setCursor(0, 0);
 	lcd.print("Measuring");
@@ -40,3 +38,4 @@ void printMeasure(){
 }
 
 
+void 
