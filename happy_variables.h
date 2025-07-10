@@ -2,17 +2,13 @@
 
 
 // HX711 variables
-const uint8_t pinGND_hx711 = GND; // must be changed
-const uint8_t pinDT_hx711 = 2;
-const uint8_t pinSCK_hx711 = 3;
-const uint8_t pinVCC_hx711 = 5V; // must be changed
+const uint8_t dataHX711 = 2;
+const uint8_t clockHX711 = 3;
 
 
 // I2C variables
-const uint8_t pinGND_i2c = GND; //must be changed
-const uint8_t pinVCC_i2c = 5V;
-cons uint8_t pinSDA_i2c = A4;
-const uint8_t pinSCL_i2c = A5;
+cons uint8_t dataI2C = A4;
+const uint8_t clockI2C = A5;
 
 // Botton variables
 const uint8_t pinBottonTare = 6; // must be changed

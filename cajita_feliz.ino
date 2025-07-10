@@ -8,7 +8,7 @@ HX711 scale;
 void setup() {
   
   Serial.begin(57600);
-  scale.begin(pinDT_hx711, pinSCK_hx711);
+  scale.begin(dataHX711, clockHX711);
 
 
   LiquidCrystal_I2C lcd(0x3F,16,2);
