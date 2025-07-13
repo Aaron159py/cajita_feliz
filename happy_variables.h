@@ -1,6 +1,3 @@
-// PIN Variables start with pin
-
-
 // HX711 variables
 const uint8_t dataHX711 = 2;
 const uint8_t clockHX711 = 3;
@@ -19,4 +16,4 @@ const uint8_t pinBotton3 = 8; // must be changed
 
 // else variables
 float tareValue = 0.0;
-float measure = 0.0;
+float medida = 0.0;
