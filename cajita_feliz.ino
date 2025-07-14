@@ -1,25 +1,82 @@
 #include "happy_functions.h"
 
+LiquidCrystal_I2C lcd(0x27,16,2);
 HX711 scale;
 
-
-void setup() {
-  // HX711
-  Serial.begin(57600);
-  scale.begin(dataHX711, clockHX711);
-
-  // I2C
-  LiquidCrystal_I2C lcd(0x3F,16,2);
+void setup(){
   lcd.init();
   lcd.backlight();
 
-  // pinModes
-  pinMode(pinBottonTare, INPUT);
-  pinMode(pinBottonReset, INPUT);
-  pinMode(pinBotton3, INPUT);
-
+  Serial.begin(115200);
+  scale.begin(dataHX711, clockHX711);
+  pinMode(bottonReset,INPUT_PULLUP);            //boton 1 reset
+  pinMode(bottonTare,INPUT_PULLUP);            //boton 2 tare
+  pinMode(bottonElse,INPUT_PULLUP);           //boton 3 nose que hace
+  scale.set_scale(730.15);    
 }
 
-void loop() {
-  
+void loop(){  
+
+  if (!poweredup) {  //tare inicial y variables de seteo iniciales como la calibracion
+  f = scale.read_average(25);
+  scales = 731.02;
+  poweredup = true;
+  med[0] = scale.read();
+  f2+=med[0];
+  i++;
+    }
+
+  f2-=med[i];                       //codigo de promedio dinamico
+  med[i] = scale.read();
+  f2+=med[i];
+  i= (i+1)%__DATA_SAMPLING;
+  f1=f2/__DATA_SAMPLING;
+
+  aux5=aux2;                        //transforma la lectura desnuda a la lectura en gramos, calcula la diferencia de la lectura anterior y la nueva para el diferencial usado despues (fluctuaciones)
+  aux2 = (f1-f4)/scales - aux3;
+  aux1= aux5-aux2;
+  aux6 = abs(aux1);
+
+  if (block) {
+    aux8 = trunc(aux7);
+  } else {
+    aux8 = trunc(aux2 * 100.0);
+  }
+
+  if (i%5==0) {         //superbloque para el bloqueo de la lectura y optimizacion de las fluctuaciones
+
+    printWeigh(aux8/100);
+    if (aux7==aux8) {
+      i2++;
+    } else {
+      i2=0;
+    }
+    if (i2==2) {
+      block = true;
+      i=0;
+    }
+    aux7=aux8;
+  }
+
+  if (abs(aux1)>0.01) {
+    block = false;
+  }
+  if (abs(aux2*100-aux7)>4) {
+    block = false;
+  }                          //termino del superbloque
+  if (!digitalRead(bottonReset)) {    //reset
+      aux3=aux2+aux3;
+      block = false; 
+  }
+
+  if (!digitalRead(bottonTare)) {      //tare
+    i = 0;
+      f = scale.read_average(20);
+    for (int j = 0; j<__DATA_SAMPLING; j++) {
+      med[j] = 0;
+    }
+    med[0] = scale.read();
+  f2+=med[0];
+  i++;
+  }
 }
