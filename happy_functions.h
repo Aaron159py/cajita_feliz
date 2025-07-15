@@ -11,10 +11,10 @@ HX711 scale;
 const uint8_t dataHX711 = 2;
 const uint8_t clockHX711 = 3;
 
-// Button variables
-const uint8_t buttonReset = 8; // must be changed
-const uint8_t buttonTare = 9; // must be changed
-const uint8_t buttonElse = 10; // must be changed
+// Botton variables
+const uint8_t buttonReset = 8;
+const uint8_t buttonTare = 9;
+const uint8_t buttonElse = 10;
 
 volatile float f, f1, f2=0, f3, f4=466970, aux1=0,aux2=0, aux3=2.91, aux5, aux6, aux7=0, i2=0, aux8;
 float scales;

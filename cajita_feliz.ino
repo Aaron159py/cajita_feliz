@@ -8,12 +8,13 @@ void setup(){
   scale.begin(dataHX711, clockHX711);
   pinMode(buttonReset,INPUT_PULLUP);
   pinMode(buttonTare,INPUT_PULLUP);
-  pinMode(buttonEaster,INPUT_PULLUP);           //boton 3 nose que hace
+  pinMode(buttonEaster,INPUT_PULLUP);
   scale.set_scale(730.15);    
 }
 
 void loop(){  
-  if (!poweredup) {  //tare inicial y variables de seteo iniciales como la calibracion
+  //tare inicial y variables de seteo iniciales como la calibracion
+  if (!poweredup) {
     f = scale.read_average(25);
     scales = 731.02;
     poweredup = true;
@@ -22,13 +23,15 @@ void loop(){
     i++;
   }
 
-  f2-=med[i];                       //codigo de promedio dinamico
+  //codigo de promedio dinamico
+  f2-=med[i];     
   med[i] = scale.read();
   f2+=med[i];
   i= (i+1)%__DATA_SAMPLING;
   f1=f2/__DATA_SAMPLING;
 
-  aux5=aux2;                        //transforma la lectura desnuda a la lectura en gramos, calcula la diferencia de la lectura anterior y la nueva para el diferencial usado despues (fluctuaciones)
+  aux5=aux2;
+  //transforma la lectura desnuda a la lectura en gramos, calcula la diferencia de la lectura anterior y la nueva para el diferencial usado despues (fluctuaciones)
   aux2 = (f1-f4)/scales - aux3;
   aux1= aux5-aux2;
   aux6 = abs(aux1);
@@ -39,13 +42,15 @@ void loop(){
     aux8 = trunc(aux2 * 100.0);
   }
 
-  if (i%5==0) {         //superbloque para el bloqueo de la lectura y optimizacion de las fluctuaciones
+  //superbloque para el bloqueo de la lectura y optimizacion de las fluctuaciones
+  if (i%5==0) {         
     printWeigh(aux8/100);
     if (aux7==aux8) {
       i2++;
     } else {
       i2=0;
     }
+    
     if (i2==2) {
       block = true;
       i=0;
@@ -58,13 +63,17 @@ void loop(){
   }
   if (abs(aux2*100-aux7)>4) {
     block = false;
-  }                          //termino del superbloque
-  if (!digitalRead(buttonReset)) {    //reset
+  }                          
+  //termino del superbloque
+  
+  //reset
+  if (!digitalRead(buttonReset)) {
       aux3=aux2+aux3;
       block = false; 
   }
 
-  if (!digitalRead(9)) {      //tare
+  //tare
+  if (!digitalRead(buttonTare)) {
     i = 0;
     f = scale.read_average(20);
     for (int j = 0; j<__DATA_SAMPLING; j++) {
