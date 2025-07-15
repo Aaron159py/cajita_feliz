@@ -84,7 +84,7 @@ void printWeigh(float measure) {
     }
   }
 
-  // Cero
+  // Internal Error
   else {
     Serial.println("Internal Error");
     lcd.setCursor(weighSpace, 0);
