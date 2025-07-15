@@ -1,30 +1,26 @@
 #include "happy_functions.h"
 
-LiquidCrystal_I2C lcd(0x27,16,2);
-HX711 scale;
-
 void setup(){
   lcd.init();
   lcd.backlight();
 
   Serial.begin(115200);
   scale.begin(dataHX711, clockHX711);
-  pinMode(bottonReset,INPUT_PULLUP);            //boton 1 reset
-  pinMode(bottonTare,INPUT_PULLUP);            //boton 2 tare
-  pinMode(bottonElse,INPUT_PULLUP);           //boton 3 nose que hace
+  pinMode(buttonReset,INPUT_PULLUP);
+  pinMode(buttonTare,INPUT_PULLUP);
+  pinMode(buttonEaster,INPUT_PULLUP);           //boton 3 nose que hace
   scale.set_scale(730.15);    
 }
 
 void loop(){  
-
   if (!poweredup) {  //tare inicial y variables de seteo iniciales como la calibracion
-  f = scale.read_average(25);
-  scales = 731.02;
-  poweredup = true;
-  med[0] = scale.read();
-  f2+=med[0];
-  i++;
-    }
+    f = scale.read_average(25);
+    scales = 731.02;
+    poweredup = true;
+    med[0] = scale.read();
+    f2+=med[0];
+    i++;
+  }
 
   f2-=med[i];                       //codigo de promedio dinamico
   med[i] = scale.read();
@@ -44,7 +40,6 @@ void loop(){
   }
 
   if (i%5==0) {         //superbloque para el bloqueo de la lectura y optimizacion de las fluctuaciones
-
     printWeigh(aux8/100);
     if (aux7==aux8) {
       i2++;
@@ -64,19 +59,19 @@ void loop(){
   if (abs(aux2*100-aux7)>4) {
     block = false;
   }                          //termino del superbloque
-  if (!digitalRead(bottonReset)) {    //reset
+  if (!digitalRead(buttonReset)) {    //reset
       aux3=aux2+aux3;
       block = false; 
   }
 
-  if (!digitalRead(bottonTare)) {      //tare
+  if (!digitalRead(9)) {      //tare
     i = 0;
-      f = scale.read_average(20);
+    f = scale.read_average(20);
     for (int j = 0; j<__DATA_SAMPLING; j++) {
       med[j] = 0;
     }
     med[0] = scale.read();
-  f2+=med[0];
-  i++;
+    f2+=med[0];
+    i++;
   }
 }

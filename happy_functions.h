@@ -1,26 +1,26 @@
 #include "HX711.h"
-#include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
+#include <math.h>
+#include <Wire.h> 
+#define __DATA_SAMPLING 25
 
-// I2C variables
-const uint8_t dataI2C = A4;
-const uint8_t clockI2C = A5;
+LiquidCrystal_I2C lcd(0x27,16,2);
+HX711 scale;
 
 // HX711 variables
 const uint8_t dataHX711 = 2;
 const uint8_t clockHX711 = 3;
 
-// Botton variables
-const uint8_t bottonReset = 8; // must be changed
-const uint8_t bottonTare = 9; // must be changed
-const uint8_t bottonElse = 10; // must be changed
+// Button variables
+const uint8_t buttonReset = 8; // must be changed
+const uint8_t buttonTare = 9; // must be changed
+const uint8_t buttonElse = 10; // must be changed
 
 volatile float f, f1, f2=0, f3, f4=466970, aux1=0,aux2=0, aux3=2.91, aux5, aux6, aux7=0, i2=0, aux8;
 float scales;
 bool poweredup = false, block = false;
 int i =0;
 float med[__DATA_SAMPLING] = {0};
-
 
 void printWeigh(float measure) {
   lcd.clear();
@@ -97,7 +97,7 @@ void printWeigh(float measure) {
 
 void printTaring(){
   int scrollTime = 400;
-  Serial.println("Taring, remove all weights");
+  Serial.println("Taring, remove weights");
   lcd.clear();
   lcd.setCursor(2, 0);
   lcd.print("TARING...   TARING...");
