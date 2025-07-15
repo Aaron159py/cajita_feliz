@@ -114,3 +114,35 @@ void printTared(){
   lcd.setCursor(3, 0);
   lcd.print("TARE DONE");
 }
+
+void easterFunction(int option){
+  int scrollTime = 400;
+  int controlTime = 1000;
+  
+  switch (option){
+    case 1:
+      Serial.println("Beatuful Harmony");
+      lcd.clear();
+      lcd.setCursor(3, 0);
+      lcd.print("Beatiful");
+      lcd.setCursor(4, 1);
+      lcd.print("Harmony");
+      delay(1000);
+      break;
+    
+    case 2:
+      Serial.println("Credits: ")
+      Serial.println("Aaron Ascencio, Vicente Ahumada, Eimear Morrison, Wolfgang Vyhmeister");
+      lcd.clear();
+      lcd.setCursor(1, 0);
+      lcd.print("|   Aaron  | Vicente |  Eimear  |  Wolfgang  |");
+      lcd.setCursor(1, 1);
+      lcd.print("| Ascencio | Ahumada | Morrison | Vyhmeister |");
+      
+      for (int i = 0; i < 46; i++){
+        lcd.scrollDisplayLeft();
+        delay(scrollTime);
+      }
+      break;
+  }
+}
