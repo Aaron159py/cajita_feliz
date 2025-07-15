@@ -61,7 +61,6 @@ void printWeigh(float measure) {
     lcd.print("DANGER!!! REMOVE THE WEIGHT");
     lcd.setCursor(1, 1);
     lcd.print("this scale cannot weigh over 1 kg");
-
     
     for (int i = 0; i<20; i++){
       lcd.scrollDisplayLeft();
@@ -93,7 +92,6 @@ void printWeigh(float measure) {
     lcd.print("Internal Error");
   }
 }
-
 
 void printTaring(){
   int scrollTime = 400;
